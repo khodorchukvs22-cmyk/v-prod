@@ -72,6 +72,10 @@ padding: 0 22px;
 
 section { padding: 95px 0; }
 
+/* REMOVE LINES */
+.divider { display: none; }
+.hero-waves { display: none; }
+
 /* HEADER */
 header {
 position: sticky;
@@ -911,7 +915,6 @@ V-PROD
 <div class="container">
 <div class="hero-center">
 <h1 class="hero-title" id="animatedTitle"></h1>
-
 <div class="hero-sub">Web • AI • Branding • Launch</div>
 
 <div class="hero-actions">
@@ -1137,10 +1140,12 @@ scroll
 </div>
 
 <div class="card">
-<form id="leadForm">
-<input type="text" id="name" placeholder="Ваше имя" required />
-<input type="text" id="contactInfo" placeholder="Telegram / WhatsApp / Email" required />
-<textarea id="message" placeholder="Коротко опишите задачу"></textarea>
+<form action="https://formspree.io/f/mnjrnklw" method="POST" id="leadForm">
+<input type="hidden" name="_subject" value="Новая заявка с сайта V-PROD" />
+
+<input type="text" name="name" placeholder="Ваше имя" required />
+<input type="text" name="contact" placeholder="Telegram / WhatsApp / Email" required />
+<textarea name="message" placeholder="Коротко опишите задачу"></textarea>
 
 <button type="submit" class="btn primary magnetic">Отправить заявку</button>
 
@@ -1149,7 +1154,7 @@ scroll
 </div>
 
 <div class="success-message" id="successMessage">
-Заявка готова ✅ Сейчас откроется Telegram для отправки сообщения.
+Заявка отправлена ✅ Я скоро вам напишу.
 </div>
 </form>
 </div>
@@ -1320,30 +1325,31 @@ btn.style.transform = "translate(0,0)";
 });
 });
 
-// ===== Form -> Telegram send =====
+// ===== Formspree submit =====
 const form = document.getElementById("leadForm");
 const successMessage = document.getElementById("successMessage");
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
 e.preventDefault();
 
-const name = document.getElementById("name").value.trim();
-const contact = document.getElementById("contactInfo").value.trim();
-const message = document.getElementById("message").value.trim();
+const formData = new FormData(form);
 
-const text =
-`Заявка с сайта V-PROD:%0A` +
-`Имя: ${encodeURIComponent(name)}%0A` +
-`Контакт: ${encodeURIComponent(contact)}%0A` +
-`Задача: ${encodeURIComponent(message || "не указано")}`;
+try {
+const response = await fetch(form.action, {
+method: form.method,
+body: formData,
+headers: { "Accept": "application/json" }
+});
 
+if (response.ok) {
 successMessage.style.display = "block";
-
-setTimeout(() => {
-window.open(`https://t.me/khodorv?text=${text}`, "_blank");
-}, 700);
-
 form.reset();
+} else {
+alert("Ошибка отправки. Попробуйте ещё раз.");
+}
+} catch (error) {
+alert("Ошибка сети. Проверьте интернет.");
+}
 });
 </script>
 
