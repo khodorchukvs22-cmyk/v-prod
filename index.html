@@ -72,44 +72,6 @@ padding: 0 22px;
 
 section { padding: 95px 0; }
 
-/* PREMIUM GRID OVERLAY */
-.grid-overlay {
-position: fixed;
-inset: 0;
-z-index: -3;
-pointer-events: none;
-opacity: 0.45;
-}
-
-.grid-overlay::before {
-content: "";
-position: absolute;
-inset: 0;
-background:
-linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px);
-background-size: 120px 100%;
-mask-image: radial-gradient(circle at 50% 25%, black, transparent 72%);
-}
-
-.grid-overlay::after {
-content: "";
-position: absolute;
-inset: 0;
-background:
-linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
-background-size: 100% 120px;
-mask-image: radial-gradient(circle at 50% 25%, black, transparent 72%);
-opacity: 0.55;
-}
-
-/* SECTION DIVIDER */
-.divider {
-height: 1px;
-background: linear-gradient(to right, transparent, rgba(0,0,0,0.12), transparent);
-margin: 0;
-opacity: 0.8;
-}
-
 /* HEADER */
 header {
 position: sticky;
@@ -224,49 +186,6 @@ position: relative;
 text-align: center;
 padding: 80px 0;
 position: relative;
-}
-
-/* Animated wave lines behind */
-.hero-waves {
-position: absolute;
-left: 50%;
-top: 50%;
-width: 900px;
-height: 440px;
-transform: translate(-50%, -50%);
-z-index: -1;
-opacity: 0.52;
-pointer-events: none;
-filter: blur(0.15px);
-}
-
-.hero-waves svg { width: 100%; height: 100%; display: block; }
-
-.wave-line {
-fill: none;
-stroke: rgba(0,0,0,0.22);
-stroke-width: 1;
-stroke-linecap: round;
-stroke-dasharray: 220;
-stroke-dashoffset: 0;
-animation: waveMove 7s linear infinite;
-}
-
-.wave-line.l2 { opacity: 0.55; animation-duration: 9s; }
-.wave-line.l3 { opacity: 0.35; animation-duration: 11s; }
-.wave-line.l4 { opacity: 0.25; animation-duration: 13s; }
-
-@keyframes waveMove {
-0% { stroke-dashoffset: 0; }
-100% { stroke-dashoffset: -650; }
-}
-
-.hero-waves::after {
-content: "";
-position: absolute;
-inset: 0;
-background: radial-gradient(circle at center, rgba(0,0,0,0.08), transparent 70%);
-opacity: 0.6;
 }
 
 /* LETTER ANIMATION */
@@ -930,7 +849,6 @@ transform: translateY(0);
 nav { display: none; }
 .hero-title { font-size: 56px; }
 .badge { display: none; }
-.hero-waves { width: 440px; height: 220px; }
 
 .about-grid { grid-template-columns: 1fr; }
 .tabs-wrap { grid-template-columns: 1fr; }
@@ -944,12 +862,10 @@ nav { display: none; }
 @media (max-width: 520px) {
 section { padding: 70px 0; }
 .hero-title { font-size: 44px; }
-.hero-waves { width: 360px; height: 200px; }
 .footer-watermark { font-size: 46px; bottom: -10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-.wave-line { animation: none; }
 .reveal { transition: none; transform: none; }
 .tab-content { animation: none; }
 .btn { transition: none; }
@@ -960,8 +876,6 @@ section { padding: 70px 0; }
 </head>
 
 <body>
-
-<div class="grid-overlay"></div>
 
 <header>
 <div class="container">
@@ -996,17 +910,6 @@ V-PROD
 
 <div class="container">
 <div class="hero-center">
-
-<div class="hero-waves">
-<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
-<path class="wave-line l1" d="M-80 90 C 140 40, 260 150, 480 90 C 700 30, 820 150, 980 80" />
-<path class="wave-line l2" d="M-80 140 C 120 90, 280 200, 520 140 C 760 80, 820 220, 980 120" />
-<path class="wave-line l3" d="M-80 200 C 150 140, 300 260, 540 200 C 780 140, 820 280, 980 180" />
-<path class="wave-line l4" d="M-80 270 C 180 210, 320 320, 580 270 C 840 210, 820 350, 980 250" />
-<path class="wave-line l2" d="M-80 320 C 160 260, 340 360, 600 320 C 860 260, 820 400, 980 310" />
-</svg>
-</div>
-
 <h1 class="hero-title" id="animatedTitle"></h1>
 
 <div class="hero-sub">Web • AI • Branding • Launch</div>
@@ -1023,8 +926,6 @@ scroll
 </div>
 </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -1057,8 +958,6 @@ scroll
 </div>
 </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- SOLUTIONS -->
 <section id="tabs">
@@ -1159,8 +1058,6 @@ scroll
 </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- PACKAGES -->
 <section id="packages">
 <div class="container">
@@ -1218,8 +1115,6 @@ scroll
 </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- CONTACT FORM -->
 <section id="contact">
 <div class="container">
@@ -1261,8 +1156,6 @@ scroll
 </div>
 </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- CASES -->
 <section id="cases">
@@ -1315,8 +1208,6 @@ scroll
 </div>
 </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- LINKS -->
 <section id="links">
@@ -1427,15 +1318,6 @@ btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
 btn.addEventListener("mouseleave", () => {
 btn.style.transform = "translate(0,0)";
 });
-});
-
-// ===== Parallax Waves (subtle) =====
-const waves = document.querySelector(".hero-waves");
-
-window.addEventListener("mousemove", (e) => {
-const x = (e.clientX / window.innerWidth - 0.5) * 14;
-const y = (e.clientY / window.innerHeight - 0.5) * 10;
-waves.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
 });
 
 // ===== Form -> Telegram send =====
