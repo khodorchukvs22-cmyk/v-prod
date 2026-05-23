@@ -3,905 +3,219 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light only" />
 <title>V-PROD — Web & AI Studio</title>
-<meta name="description" content="V-PROD — сайты, AI-решения и упаковка бренда для бизнеса и экспертов." />
-
 <style>
 :root {
---bg: #f4f5f7;
---text: rgba(12, 12, 14, 0.92);
---muted: rgba(12, 12, 14, 0.62);
---muted2: rgba(12, 12, 14, 0.42);
-
---border: rgba(0, 0, 0, 0.10);
---border2: rgba(0, 0, 0, 0.06);
-
---card: rgba(255, 255, 255, 0.78);
---shadow: 0 18px 55px rgba(0, 0, 0, 0.06);
-
---radius: 20px;
---max: 1120px;
-
---font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Noto Sans", sans-serif;
+--text: #0c0c0e;
+--muted: rgba(12,12,14,0.55);
+--border: rgba(0,0,0,0.09);
+--radius: 18px;
+--font: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-margin: 0;
-font-family: var(--font);
-background: var(--bg);
-color: var(--text);
-overflow-x: hidden;
-}
-
-/* Premium blobs */
-body::before {
-content: "";
-position: fixed;
-inset: 0;
-z-index: -5;
-background:
-radial-gradient(circle at 18% 18%, rgba(0,0,0,0.06), transparent 55%),
-radial-gradient(circle at 85% 20%, rgba(0,0,0,0.05), transparent 60%),
-radial-gradient(circle at 65% 85%, rgba(0,0,0,0.06), transparent 60%);
-opacity: 0.45;
-pointer-events: none;
-}
-
-/* Noise */
-body::after {
-content: "";
-position: fixed;
-inset: 0;
-z-index: -4;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-opacity: 0.12;
-pointer-events: none;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; color-scheme: light only; }
+body { font-family: var(--font); background: #fff; color: var(--text); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 
-.container {
-width: 100%;
-max-width: var(--max);
-margin: 0 auto;
-padding: 0 22px;
-}
-
-section { padding: 95px 0; }
-
-/* REMOVE LINES */
-.divider { display: none; }
-.hero-waves { display: none; }
+/* LAYOUT */
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.wrap { width: 100%; max-width: 640px; margin: 0 auto; padding: 0 20px; }
+section { padding: 64px 0; }
 
 /* HEADER */
-header {
-position: sticky;
-top: 0;
-z-index: 999;
-backdrop-filter: blur(16px);
-background: rgba(244, 245, 247, 0.72);
-border-bottom: 1px solid var(--border2);
-}
-
-.header-inner {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 16px 0;
-gap: 16px;
-}
-
-.logo {
-display: flex;
-align-items: center;
-gap: 12px;
-font-weight: 900;
-letter-spacing: 0.8px;
-text-transform: uppercase;
-font-size: 14px;
-}
-
-.logo-mark {
-width: 11px;
-height: 11px;
-border-radius: 999px;
-background: rgba(0,0,0,0.92);
-box-shadow: 0 0 0 8px rgba(0,0,0,0.06);
-}
-
-nav {
-display: flex;
-gap: 18px;
-align-items: center;
-}
-
-nav a {
-font-size: 13px;
-color: var(--muted);
-transition: 0.2s ease;
-}
-
+header { position: sticky; top: 0; z-index: 999; background: #fff; border-bottom: 1px solid var(--border); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; gap: 16px; }
+.logo { font-weight: 900; font-size: 15px; letter-spacing: 0.4px; display: flex; align-items: center; gap: 10px; }
+.logo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text); flex-shrink: 0; }
+nav { display: flex; gap: 22px; }
+nav a { font-size: 14px; color: var(--muted); font-weight: 500; transition: color 0.15s; cursor: pointer; }
 nav a:hover { color: var(--text); }
+.burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.25s ease; }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* MOBILE MENU */
+.mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); z-index: 998; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; font-size: 16px; font-weight: 600; color: var(--text); padding: 15px 20px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.mobile-menu a:last-child { border-bottom: none; font-weight: 800; }
 
 /* BUTTONS */
-.btn {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-padding: 12px 16px;
-border-radius: 14px;
-font-size: 14px;
-font-weight: 750;
-border: 1px solid var(--border);
-background: rgba(255,255,255,0.75);
-color: var(--text);
-cursor: pointer;
-transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
-position: relative;
-overflow: hidden;
-will-change: transform;
-}
-
-.btn:hover {
-background: rgba(255,255,255,0.92);
-box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-.btn.primary {
-background: rgba(0,0,0,0.92);
-color: rgba(255,255,255,0.92);
-border-color: rgba(0,0,0,0.85);
-}
-
-.btn.primary:hover {
-background: rgba(0,0,0,0.98);
-box-shadow: 0 16px 40px rgba(0,0,0,0.14);
-}
-
-/* subtle glow */
-.btn::after {
-content: "";
-position: absolute;
-inset: -2px;
-border-radius: inherit;
-background: radial-gradient(circle at 30% 20%, rgba(0,0,0,0.10), transparent 55%),
-radial-gradient(circle at 80% 70%, rgba(0,0,0,0.08), transparent 60%);
-opacity: 0;
-transition: opacity 220ms ease;
-pointer-events: none;
-}
-
-.btn:hover::after { opacity: 1; }
-
-/* HERO */
-.hero {
-min-height: 92vh;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 0;
-position: relative;
-}
-
-.hero-center {
-text-align: center;
-padding: 80px 0;
-position: relative;
-}
-
-/* LETTER ANIMATION */
-.hero-title {
-margin: 0;
-font-size: 96px;
-letter-spacing: -2.5px;
-font-weight: 950;
-text-transform: uppercase;
-line-height: 1;
-position: relative;
-z-index: 2;
-display: inline-flex;
-gap: 2px;
-}
-
-.hero-title span {
-display: inline-block;
-transform: translateY(22px);
-opacity: 0;
-animation: letterIn 0.8s ease forwards;
-}
-
-@keyframes letterIn {
-to { transform: translateY(0); opacity: 1; }
-}
-
-.hero-sub {
-margin-top: 18px;
-font-size: 14px;
-text-transform: uppercase;
-letter-spacing: 0.9px;
-color: var(--muted);
-position: relative;
-z-index: 2;
-opacity: 0;
-transform: translateY(10px);
-animation: fadeIn 0.8s ease forwards;
-animation-delay: 0.75s;
-}
-
-@keyframes fadeIn {
-to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-actions {
-margin-top: 26px;
-display: flex;
-justify-content: center;
-gap: 12px;
-flex-wrap: wrap;
-position: relative;
-z-index: 2;
-opacity: 0;
-transform: translateY(10px);
-animation: fadeIn 0.8s ease forwards;
-animation-delay: 0.95s;
-}
-
-/* Stickers */
-.badge {
-position: absolute;
-padding: 10px 14px;
-border-radius: 999px;
-border: 1px solid rgba(0,0,0,0.10);
-background: rgba(255,255,255,0.72);
-backdrop-filter: blur(12px);
-box-shadow: var(--shadow);
-font-size: 12px;
-font-weight: 850;
-text-transform: uppercase;
-letter-spacing: 0.6px;
-color: rgba(0,0,0,0.65);
-transform: rotate(-7deg);
-animation: floaty 4s ease-in-out infinite;
-}
-
-@keyframes floaty {
-0% { transform: translateY(0) rotate(-7deg); }
-50% { transform: translateY(-6px) rotate(-7deg); }
-100% { transform: translateY(0) rotate(-7deg); }
-}
-
-.badge.b1 { top: 18%; left: 12%; }
-.badge.b2 { top: 20%; right: 12%; transform: rotate(8deg); animation-delay: 0.6s; }
-.badge.b3 { bottom: 20%; left: 14%; transform: rotate(6deg); animation-delay: 1.2s; }
-.badge.b4 { bottom: 18%; right: 14%; transform: rotate(-8deg); animation-delay: 0.9s; }
-
-.badge-dot {
-display: inline-block;
-width: 6px;
-height: 6px;
-border-radius: 999px;
-background: rgba(0,0,0,0.85);
-margin-right: 8px;
-box-shadow: 0 0 0 6px rgba(0,0,0,0.05);
-}
-
-.scroll-hint {
-margin-top: 42px;
-font-size: 12px;
-color: var(--muted2);
-text-transform: uppercase;
-letter-spacing: 0.8px;
-display: inline-flex;
-align-items: center;
-gap: 10px;
-position: relative;
-z-index: 2;
-opacity: 0;
-animation: fadeIn 0.8s ease forwards;
-animation-delay: 1.2s;
-}
-
-.scroll-dot {
-width: 6px;
-height: 6px;
-border-radius: 999px;
-background: rgba(0,0,0,0.70);
-box-shadow: 0 0 0 6px rgba(0,0,0,0.06);
-animation: pulse 1.7s ease infinite;
-}
-
-@keyframes pulse {
-0% { transform: scale(1); opacity: 0.75; }
-50% { transform: scale(1.3); opacity: 1; }
-100% { transform: scale(1); opacity: 0.75; }
-}
-
-/* TITLES */
-.title {
-font-size: 34px;
-margin: 0 0 10px;
-letter-spacing: -0.6px;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.15s, transform 0.15s; border: none; font-family: var(--font); white-space: nowrap; }
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-dark { background: var(--text); color: #fff; }
+.btn-light { background: #fff; color: var(--text); border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.btn-lg { padding: 14px 24px; font-size: 15px; border-radius: 14px; }
+.btn-full { width: 100%; }
 
 /* CARDS */
-.card {
-border-radius: var(--radius);
-border: 1px solid var(--border2);
-background: var(--card);
-padding: 20px;
-box-shadow: var(--shadow);
-transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
-position: relative;
-overflow: hidden;
-}
+.card { background: #fff; border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
 
-.card:hover {
-transform: translateY(-3px);
-background: rgba(255,255,255,0.92);
-box-shadow: 0 25px 70px rgba(0,0,0,0.10);
-}
+/* HERO */
+.hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+.hero-inner { position: relative; z-index: 2; }
+.hero-title { font-size: 80px; font-weight: 950; letter-spacing: -2px; line-height: 1; text-transform: uppercase; }
+.hero-sub { margin-top: 14px; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.hero-actions { margin-top: 28px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-.card::before {
-content: "";
-position: absolute;
-inset: 0;
-background-image: radial-gradient(rgba(0,0,0,0.12) 1px, transparent 1px);
-background-size: 28px 28px;
-opacity: 0.05;
-pointer-events: none;
-}
+/* BADGES */
+.badge { position: absolute; display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 999px; background: #fff; border: 1px solid rgba(0,0,0,0.10); box-shadow: 0 4px 16px rgba(0,0,0,0.08); font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text); pointer-events: none; }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text); flex-shrink: 0; }
+.b1 { top: 22%; left: 18%; animation: f1 4s ease-in-out infinite; }
+.b2 { top: 20%; right: 18%; animation: f2 4s ease-in-out infinite 0.5s; }
+.b3 { bottom: 28%; left: 18%; animation: f3 4s ease-in-out infinite 1s; }
+.b4 { bottom: 26%; right: 18%; animation: f4 4s ease-in-out infinite 1.5s; }
+@keyframes f1 { 0%,100%{transform:translateY(0) rotate(-6deg)} 50%{transform:translateY(-7px) rotate(-6deg)} }
+@keyframes f2 { 0%,100%{transform:translateY(0) rotate(6deg)} 50%{transform:translateY(-7px) rotate(6deg)} }
+@keyframes f3 { 0%,100%{transform:translateY(0) rotate(5deg)} 50%{transform:translateY(-7px) rotate(5deg)} }
+@keyframes f4 { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-7px) rotate(-5deg)} }
 
-.card > * {
-position: relative;
-z-index: 2;
-}
+/* SECTION TITLES */
+.sec-title { font-size: 36px; font-weight: 950; letter-spacing: -1px; margin-bottom: 8px; }
+.sec-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
 
-.about-grid {
-margin-top: 34px;
-display: grid;
-grid-template-columns: 1.2fr 0.8fr;
-gap: 16px;
-}
-
-.about-text {
-margin: 0;
-font-size: 15px;
-line-height: 1.7;
-color: var(--muted);
-}
-
-.list {
-display: grid;
-gap: 12px;
-margin-top: 8px;
-}
-
-.list-item {
-display: flex;
-gap: 12px;
-align-items: flex-start;
-font-size: 14px;
-color: var(--muted);
-}
-
-.check {
-width: 22px;
-height: 22px;
-border-radius: 8px;
-background: rgba(0,0,0,0.05);
-border: 1px solid rgba(0,0,0,0.10);
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 900;
-font-size: 13px;
-color: rgba(0,0,0,0.70);
-flex: 0 0 auto;
-}
+/* CHECK LIST */
+.check-list { display: grid; gap: 10px; }
+.check-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.check-icon { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
 
 /* TABS */
-.tabs-wrap {
-margin-top: 34px;
-display: grid;
-grid-template-columns: 0.40fr 0.60fr;
-gap: 16px;
-align-items: start;
-}
-
-.tabs {
-display: grid;
-gap: 10px;
-}
-
-.tab-btn {
-text-align: left;
-padding: 14px 14px;
-border-radius: 14px;
-border: 1px solid rgba(0,0,0,0.08);
-background: rgba(255,255,255,0.72);
-cursor: pointer;
-transition: 0.2s ease;
-font-weight: 900;
-font-size: 14px;
-color: rgba(0,0,0,0.60);
-}
-
-.tab-btn:hover {
-background: rgba(255,255,255,0.92);
-color: rgba(0,0,0,0.88);
-}
-
-.tab-btn.active {
-background: rgba(0,0,0,0.92);
-color: rgba(255,255,255,0.92);
-border-color: rgba(0,0,0,0.80);
-}
-
-.tab-content {
-border-radius: var(--radius);
-border: 1px solid rgba(0,0,0,0.06);
-background: rgba(255,255,255,0.80);
-padding: 22px;
-min-height: 320px;
-box-shadow: var(--shadow);
-animation: tabFade 260ms ease;
-position: relative;
-overflow: hidden;
-}
-
-.tab-content::before {
-content: "";
-position: absolute;
-inset: 0;
-background: linear-gradient(135deg, rgba(0,0,0,0.06), transparent 55%);
-opacity: 0.12;
-pointer-events: none;
-}
-
-.tab-content > * {
-position: relative;
-z-index: 2;
-}
-
-@keyframes tabFade {
-from { opacity: 0; transform: translateY(8px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.tab-content h3 {
-margin: 0 0 10px;
-font-size: 18px;
-}
-
-.tab-content p {
-margin: 0 0 18px;
-font-size: 14px;
-color: var(--muted);
-}
-
-.tab-list {
-margin: 0 0 18px;
-padding: 0;
-list-style: none;
-display: grid;
-gap: 10px;
-}
-
-.tab-list li {
-display: flex;
-gap: 10px;
-font-size: 14px;
-color: var(--muted);
-align-items: flex-start;
-}
-
-.tab-result {
-margin-top: 10px;
-padding: 14px;
-border-radius: 14px;
-border: 1px solid rgba(0,0,0,0.06);
-background: rgba(0,0,0,0.03);
-color: rgba(0,0,0,0.82);
-font-size: 14px;
-font-weight: 650;
-}
+.tabs-nav { display: grid; gap: 8px; margin-bottom: 12px; }
+.tab-btn { width: 100%; text-align: left; padding: 15px 16px; border-radius: 14px; border: 1px solid var(--border); background: #fff; font-family: var(--font); font-size: 15px; font-weight: 700; color: var(--muted); cursor: pointer; transition: 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { background: var(--text); color: #fff; border-color: var(--text); box-shadow: none; }
+.tab-panel { background: #fff; border-radius: var(--radius); padding: 22px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); animation: fadeUp 0.2s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.tab-panel h3 { font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+.tab-panel p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+.tab-list { list-style: none; display: grid; gap: 10px; margin-bottom: 16px; }
+.tab-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.tab-result { padding: 13px 15px; border-radius: 12px; background: #f5f5f5; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+.tab-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 /* PACKAGES */
-.packages-grid {
-margin-top: 34px;
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 14px;
-}
-
-.package-card {
-border-radius: var(--radius);
-border: 1px solid rgba(0,0,0,0.06);
-background: rgba(255,255,255,0.78);
-padding: 20px;
-box-shadow: var(--shadow);
-transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
-position: relative;
-overflow: hidden;
-display: grid;
-gap: 12px;
-}
-
-.package-card:hover {
-transform: translateY(-4px);
-background: rgba(255,255,255,0.94);
-box-shadow: 0 28px 80px rgba(0,0,0,0.12);
-}
-
-.package-name {
-font-size: 12px;
-font-weight: 950;
-letter-spacing: 0.8px;
-text-transform: uppercase;
-color: rgba(0,0,0,0.55);
-}
-
-.package-title {
-font-size: 18px;
-margin: 0;
-font-weight: 950;
-}
-
-.package-price {
-font-size: 14px;
-font-weight: 850;
-color: rgba(0,0,0,0.75);
-}
-
-.package-desc {
-margin: 0;
-font-size: 14px;
-line-height: 1.6;
-color: var(--muted);
-}
-
-.package-list {
-margin: 0;
-padding: 0;
-list-style: none;
-display: grid;
-gap: 10px;
-}
-
-.package-list li {
-display: flex;
-gap: 10px;
-font-size: 13px;
-color: var(--muted);
-align-items: flex-start;
-}
-
-.package-feature {
-width: 20px;
-height: 20px;
-border-radius: 8px;
-background: rgba(0,0,0,0.05);
-border: 1px solid rgba(0,0,0,0.10);
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 950;
-font-size: 12px;
-color: rgba(0,0,0,0.75);
-flex: 0 0 auto;
-}
-
-.package-highlight {
-border-color: rgba(0,0,0,0.14);
-background: rgba(0,0,0,0.92);
-color: rgba(255,255,255,0.92);
-}
-
-.package-highlight .package-name,
-.package-highlight .package-price,
-.package-highlight .package-desc,
-.package-highlight .package-list li {
-color: rgba(255,255,255,0.75);
-}
-
-.package-highlight .package-feature {
-background: rgba(255,255,255,0.08);
-border-color: rgba(255,255,255,0.12);
-color: rgba(255,255,255,0.85);
-}
-
-/* FORM */
-.form-wrap {
-margin-top: 34px;
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 16px;
-align-items: start;
-}
-
-.form-title {
-margin: 0 0 10px;
-font-size: 18px;
-font-weight: 950;
-}
-
-.form-text {
-margin: 0;
-font-size: 14px;
-color: var(--muted);
-line-height: 1.7;
-}
-
-form {
-display: grid;
-gap: 12px;
-}
-
-input, textarea {
-width: 100%;
-padding: 14px 14px;
-border-radius: 14px;
-border: 1px solid rgba(0,0,0,0.10);
-background: rgba(255,255,255,0.85);
-font-size: 14px;
-font-family: var(--font);
-outline: none;
-transition: 0.2s ease;
-}
-
-textarea { min-height: 120px; resize: vertical; }
-
-input:focus, textarea:focus {
-border-color: rgba(0,0,0,0.22);
-background: rgba(255,255,255,0.95);
-box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-.form-note {
-font-size: 12px;
-color: rgba(0,0,0,0.45);
-line-height: 1.5;
-}
-
-.success-message {
-display: none;
-padding: 14px;
-border-radius: 14px;
-border: 1px solid rgba(0,0,0,0.10);
-background: rgba(0,0,0,0.03);
-font-size: 14px;
-font-weight: 750;
-color: rgba(0,0,0,0.78);
-}
+.pkg-card { background: #fff; border-radius: var(--radius); padding: 22px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 10px; }
+.pkg-card.dark { background: var(--text); color: #fff; border-color: var(--text); }
+.pkg-label { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.pkg-card.dark .pkg-label { color: rgba(255,255,255,0.5); }
+.pkg-title { font-size: 22px; font-weight: 950; margin-bottom: 4px; }
+.pkg-price { font-size: 15px; font-weight: 800; color: var(--muted); margin-bottom: 10px; }
+.pkg-card.dark .pkg-price { color: rgba(255,255,255,0.6); }
+.pkg-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.pkg-card.dark .pkg-desc { color: rgba(255,255,255,0.6); }
+.pkg-list { list-style: none; display: grid; gap: 8px; margin-bottom: 18px; }
+.pkg-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.pkg-card.dark .pkg-list li { color: rgba(255,255,255,0.7); }
+.pkg-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+.pkg-card.dark .pkg-check { border-color: rgba(255,255,255,0.25); color: #fff; }
 
 /* CASES */
-.cases-grid {
-margin-top: 34px;
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 14px;
-}
+.case-card { background: #fff; border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 10px; position: relative; cursor: pointer; transition: transform 0.15s; }
+.case-card:hover { transform: translateY(-2px); }
+.case-card::after { content: "↗"; position: absolute; right: 20px; bottom: 20px; font-size: 16px; font-weight: 900; color: var(--muted); }
+.case-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.case-tag { padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+.case-year { font-size: 13px; color: var(--muted); font-weight: 600; }
+.case-title { font-size: 17px; font-weight: 900; margin-bottom: 6px; }
+.case-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 6px; }
+.case-result { font-size: 14px; font-weight: 700; }
 
-.case-card {
-border-radius: var(--radius);
-border: 1px solid rgba(0,0,0,0.06);
-background: rgba(255,255,255,0.78);
-padding: 18px;
-box-shadow: var(--shadow);
-transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
-position: relative;
-overflow: hidden;
-display: grid;
-gap: 10px;
-cursor: pointer;
-}
-
-.case-card:hover {
-transform: translateY(-4px);
-background: rgba(255,255,255,0.94);
-box-shadow: 0 28px 80px rgba(0,0,0,0.12);
-}
-
-.case-card::after {
-content: "↗";
-position: absolute;
-right: 18px;
-bottom: 18px;
-font-size: 16px;
-font-weight: 900;
-opacity: 0.22;
-transform: translateY(6px);
-transition: 0.25s ease;
-}
-
-.case-card:hover::after {
-opacity: 0.65;
-transform: translateY(0);
-}
-
-.case-top {
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.case-tag {
-padding: 8px 12px;
-border-radius: 999px;
-border: 1px solid rgba(0,0,0,0.10);
-background: rgba(0,0,0,0.04);
-font-size: 12px;
-font-weight: 900;
-text-transform: uppercase;
-color: rgba(0,0,0,0.70);
-letter-spacing: 0.4px;
-}
-
-.case-year {
-font-size: 12px;
-color: rgba(0,0,0,0.40);
-}
-
-.case-card h3 {
-margin: 0;
-font-size: 16px;
-}
-
-.case-card p {
-margin: 0;
-font-size: 14px;
-color: var(--muted);
-line-height: 1.6;
-}
-
-.case-result {
-color: rgba(0,0,0,0.82);
-}
+/* FORM */
+.field { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); background: #f5f5f5; font-size: 14px; font-family: var(--font); color: var(--text); outline: none; transition: 0.15s; margin-bottom: 10px; }
+.field:focus { border-color: rgba(0,0,0,0.25); background: #fff; }
+textarea.field { min-height: 110px; resize: vertical; }
+.field-note { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.success-msg { display: none; padding: 14px; border-radius: 12px; background: #f5f5f5; font-size: 14px; font-weight: 700; text-align: center; }
 
 /* LINKS */
-.links-grid {
-margin-top: 34px;
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 14px;
-}
-
-.link-card {
-border-radius: var(--radius);
-border: 1px solid rgba(0,0,0,0.06);
-background: rgba(255,255,255,0.78);
-padding: 18px;
-box-shadow: var(--shadow);
-transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
-display: grid;
-gap: 10px;
-}
-
-.link-card:hover {
-transform: translateY(-4px);
-background: rgba(255,255,255,0.94);
-box-shadow: 0 28px 80px rgba(0,0,0,0.12);
-}
-
-.link-card h3 {
-margin: 0;
-font-size: 15px;
-}
-
-.link-card p {
-margin: 0;
-font-size: 13px;
-color: var(--muted);
-}
+.link-card { background: #fff; border-radius: var(--radius); padding: 18px 20px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; transition: transform 0.15s; }
+.link-card:hover { transform: translateY(-2px); }
+.link-card h3 { font-size: 16px; font-weight: 900; margin-bottom: 3px; }
+.link-card p { font-size: 13px; color: var(--muted); }
+.link-arrow { font-size: 18px; font-weight: 900; color: var(--muted); }
 
 /* FOOTER */
-footer {
-border-top: 1px solid rgba(0,0,0,0.06);
-padding: 34px 0;
-background: rgba(255,255,255,0.55);
-overflow: hidden;
-}
-
-.footer-inner {
-position: relative;
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-
-footer p {
-margin: 0;
-color: rgba(0,0,0,0.45);
-font-size: 12px;
-position: relative;
-z-index: 2;
-}
-
-/* WATERMARK */
-.footer-watermark {
-position: absolute;
-right: -8px;
-bottom: -20px;
-font-size: 76px;
-font-weight: 950;
-letter-spacing: -3px;
-text-transform: uppercase;
-opacity: 0.06;
-pointer-events: none;
-user-select: none;
-white-space: nowrap;
-z-index: 1;
-}
+footer { border-top: 1px solid var(--border); padding: 24px 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-size: 12px; color: var(--muted); }
 
 /* REVEAL */
-.reveal {
-opacity: 0;
-transform: translateY(18px);
-transition: opacity 700ms ease, transform 700ms ease;
-}
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-.reveal.visible {
-opacity: 1;
-transform: translateY(0);
-}
+/* DESKTOP GRID */
+@media (min-width: 769px) {
+.wrap { max-width: 1100px; }
 
-/* RESPONSIVE */
-@media (max-width: 980px) {
+/* About */
+.about-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 16px; }
+.about-grid .card { margin-bottom: 0 !important; }
+
+/* Tabs */
+.tabs-wrap { display: grid; grid-template-columns: 0.4fr 0.6fr; gap: 16px; align-items: start; }
+.tabs-nav { margin-bottom: 0; }
+
+/* Packages */
+.pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.pkg-card { margin-bottom: 0 !important; }
+
+/* Cases */
+.cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.case-card { margin-bottom: 0 !important; }
+
+/* Links */
+.links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.link-card { margin-bottom: 0 !important; }
+}
+@media (max-width: 768px) {
 nav { display: none; }
-.hero-title { font-size: 56px; }
+.napisat { display: none; }
+.burger { display: flex; }
 .badge { display: none; }
-
-.about-grid { grid-template-columns: 1fr; }
-.tabs-wrap { grid-template-columns: 1fr; }
-.cases-grid { grid-template-columns: 1fr; }
-.links-grid { grid-template-columns: 1fr; }
-.packages-grid { grid-template-columns: 1fr; }
-.form-wrap { grid-template-columns: 1fr; }
-.footer-watermark { font-size: 52px; bottom: -10px; }
+.hero-title { font-size: 52px; }
+.sec-title { font-size: 30px; }
 }
-
-@media (max-width: 520px) {
-section { padding: 70px 0; }
-.hero-title { font-size: 44px; }
-.footer-watermark { font-size: 46px; bottom: -10px; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-.reveal { transition: none; transform: none; }
-.tab-content { animation: none; }
-.btn { transition: none; }
-.hero-title span { animation: none; opacity: 1; transform: none; }
+.reveal { transition: none; transform: none; opacity: 1; }
+.tab-panel { animation: none; }
 .badge { animation: none; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
 <div class="container">
 <div class="header-inner">
-<div class="logo">
-<span class="logo-mark"></span>
-V-PROD
-</div>
-
+<div class="logo"><span class="logo-dot"></span>V-PROD</div>
 <nav>
-<a href="#about">Обо мне</a>
-<a href="#tabs">Решения</a>
-<a href="#packages">Форматы</a>
-<a href="#contact">Заявка</a>
-<a href="#cases">Кейсы</a>
-<a href="#links">Связь</a>
+<a onclick="go('about')">Обо мне</a>
+<a onclick="go('tabs')">Решения</a>
+<a onclick="go('packages')">Форматы</a>
+<a onclick="go('contact')">Заявка</a>
+<a onclick="go('cases')">Кейсы</a>
+<a onclick="go('links')">Связь</a>
 </nav>
-
-<a class="btn primary magnetic" href="https://t.me/khodorv" target="_blank">Написать</a>
+<button class="burger" id="burger" onclick="toggleMenu()">
+<span></span><span></span><span></span>
+</button>
+<a class="btn btn-dark napisat" href="https://t.me/khodorv" target="_blank">Написать</a>
 </div>
 </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+<a onclick="go('about')">Обо мне</a>
+<a onclick="go('tabs')">Решения</a>
+<a onclick="go('packages')">Форматы</a>
+<a onclick="go('contact')">Заявка</a>
+<a onclick="go('cases')">Кейсы</a>
+<a onclick="go('links')">Связь</a>
+<a href="https://t.me/khodorv" target="_blank">Написать в Telegram →</a>
+</div>
 
 <main>
 
@@ -911,51 +225,36 @@ V-PROD
 <div class="badge b2"><span class="badge-dot"></span>Web Design</div>
 <div class="badge b3"><span class="badge-dot"></span>Automation</div>
 <div class="badge b4"><span class="badge-dot"></span>Branding</div>
-
-<div class="container">
-<div class="hero-center">
-<h1 class="hero-title" id="animatedTitle"></h1>
+<div class="hero-inner">
+<div class="hero-title" id="heroTitle"></div>
 <div class="hero-sub">Web • AI • Branding • Launch</div>
-
 <div class="hero-actions">
-<a class="btn primary magnetic" href="#tabs">Смотреть решения</a>
-<a class="btn magnetic" href="https://t.me/khodorv" target="_blank">Telegram</a>
-</div>
-
-<a class="scroll-hint" href="#about">
-<span class="scroll-dot"></span>
-scroll
-</a>
+<button class="btn btn-dark btn-lg" onclick="go('tabs')">Смотреть решения</button>
+<a class="btn btn-light btn-lg" href="https://t.me/khodorv" target="_blank">Telegram</a>
 </div>
 </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-<div class="container">
-<h2 class="title">Обо мне</h2>
-
+<div class="wrap">
+<h2 class="sec-title reveal">Обо мне</h2>
+<p class="sec-sub reveal">Vlad Khodorchuk — Web & AI Studio</p>
 <div class="about-grid">
-<div class="card">
-<p class="about-text">
-Меня зовут <b>Влад</b>. Уже <b>1 год</b> я создаю сайты, упаковываю личные бренды
-и внедряю AI-решения для маркетинга и продаж.
-<br /><br />
-Я делаю проекты в современном минималистичном стиле, где каждый блок работает на результат:
-<b>понятный оффер → сильная структура → доверие → заявка</b>.
-<br /><br />
-Моя задача — не просто “сделать красиво”, а создать систему, которая снижает стоимость лида,
-увеличивает конверсию и помогает вам расти быстрее.
+<div class="card reveal" style="margin-bottom:10px;">
+<p style="font-size:15px;line-height:1.7;color:var(--muted);">
+Меня зовут <b style="color:var(--text)">Влад</b>. Уже <b style="color:var(--text)">1 год</b> я создаю сайты, упаковываю личные бренды и внедряю AI-решения для маркетинга и продаж.<br><br>
+Я делаю проекты в современном минималистичном стиле, где каждый блок работает на результат: <b style="color:var(--text)">понятный оффер → сильная структура → доверие → заявка</b>.<br><br>
+Моя задача — не просто "сделать красиво", а создать систему, которая снижает стоимость лида, увеличивает конверсию и помогает вам расти быстрее.
 </p>
 </div>
-
-<div class="card">
-<h3 style="margin:0 0 10px; font-size:16px;">Фокус</h3>
-<div class="list">
-<div class="list-item"><div class="check">✓</div> Продающие сайты под заявки</div>
-<div class="list-item"><div class="check">✓</div> AI-воронки и автоматизация</div>
-<div class="list-item"><div class="check">✓</div> Упаковка личного бренда</div>
-<div class="list-item"><div class="check">✓</div> Запуски инфо-продуктов</div>
+<div class="card reveal">
+<div style="font-size:15px;font-weight:900;margin-bottom:14px;">Фокус</div>
+<div class="check-list">
+<div class="check-item"><div class="check-icon">✓</div>Продающие сайты под заявки</div>
+<div class="check-item"><div class="check-icon">✓</div>AI-воронки и автоматизация</div>
+<div class="check-item"><div class="check-icon">✓</div>Упаковка личного бренда</div>
+<div class="check-item"><div class="check-icon">✓</div>Запуски инфо-продуктов</div>
 </div>
 </div>
 </div>
@@ -964,394 +263,314 @@ scroll
 
 <!-- SOLUTIONS -->
 <section id="tabs">
-<div class="container">
-<h2 class="title">Решения</h2>
-<p style="margin:0; font-size:16px; color: rgba(12,12,14,0.62); max-width:780px;">
-Выберите направление — внутри всё разложено по структуре и результату.
-</p>
-
-<div class="tabs-wrap">
-<div class="tabs">
+<div class="wrap">
+<h2 class="sec-title reveal">Решения</h2>
+<p class="sec-sub reveal">Выберите направление — внутри всё разложено по структуре и результату.</p>
+<div class="tabs-wrap reveal">
+<div class="tabs-nav">
 <button class="tab-btn active" data-tab="tab1">Сайты</button>
 <button class="tab-btn" data-tab="tab2">AI решения</button>
 <button class="tab-btn" data-tab="tab3">Личный бренд</button>
 <button class="tab-btn" data-tab="tab4">Запуски</button>
 <button class="tab-btn" data-tab="tab5">Формат работы</button>
 </div>
+<div>
 
-<div class="tab-content" id="tab1">
+<div class="tab-panel" id="tab1">
 <h3>Продающий сайт / лендинг</h3>
-<p>
-Создаю сайты, которые работают как инструмент продаж: структура под конверсию,
-понятный оффер и современный дизайн.
-</p>
+<p>Создаю сайты, которые работают как инструмент продаж: структура под конверсию, понятный оффер и современный дизайн.</p>
 <ul class="tab-list">
-<li><div class="check">✓</div> Прототип + UX-структура</li>
-<li><div class="check">✓</div> Тексты и оффер</li>
-<li><div class="check">✓</div> UI дизайн (минимализм / премиум)</li>
-<li><div class="check">✓</div> Адаптив + скорость загрузки</li>
-<li><div class="check">✓</div> Формы / CRM / аналитика</li>
+<li><div class="check-icon">✓</div>Прототип + UX-структура</li>
+<li><div class="check-icon">✓</div>Тексты и оффер</li>
+<li><div class="check-icon">✓</div>UI дизайн (минимализм / премиум)</li>
+<li><div class="check-icon">✓</div>Адаптив + скорость загрузки</li>
+<li><div class="check-icon">✓</div>Формы / CRM / аналитика</li>
 </ul>
-<div class="tab-result"><b>Результат:</b> сайт, который конвертирует трафик в заявки.</div>
+<div class="tab-result">Результат: сайт, который конвертирует трафик в заявки.</div>
+<div class="tab-actions">
+<button class="btn btn-dark" onclick="go('contact')">Оставить заявку</button>
+<a class="btn btn-light" href="https://t.me/khodorv?text=Владислав привет, я хочу получить аудит" target="_blank">Получить аудит</a>
+</div>
 </div>
 
-<div class="tab-content" id="tab2" style="display:none;">
+<div class="tab-panel" id="tab2" style="display:none;">
 <h3>AI-решения для маркетинга и продаж</h3>
-<p>
-Внедряю AI в бизнес-процессы: воронки, обработка лидов, контент и автоматизация коммуникаций.
-</p>
+<p>Внедряю AI-инструменты, которые автоматизируют рутину и увеличивают выручку без найма команды.</p>
 <ul class="tab-list">
-<li><div class="check">✓</div> AI-боты (Telegram / сайт)</li>
-<li><div class="check">✓</div> Автоворонки и прогрев</li>
-<li><div class="check">✓</div> Скрипты продаж и ответы клиентам</li>
-<li><div class="check">✓</div> Интеграции с CRM</li>
-<li><div class="check">✓</div> Автоматизация контента</li>
+<li><div class="check-icon">✓</div>AI-чат-боты для продаж и поддержки</li>
+<li><div class="check-icon">✓</div>Автоматические воронки прогрева</li>
+<li><div class="check-icon">✓</div>Генерация контента и постов</li>
+<li><div class="check-icon">✓</div>Интеграция с CRM / мессенджерами</li>
+<li><div class="check-icon">✓</div>Аналитика и A/B тесты</li>
 </ul>
-<div class="tab-result"><b>Результат:</b> меньше ручной работы + выше конверсия в продажу.</div>
+<div class="tab-result">Результат: система, которая продаёт 24/7 без вашего участия.</div>
+<div class="tab-actions">
+<button class="btn btn-dark" onclick="go('contact')">Оставить заявку</button>
+<a class="btn btn-light" href="https://t.me/khodorv?text=Владислав привет, я хочу получить аудит" target="_blank">Получить аудит</a>
+</div>
 </div>
 
-<div class="tab-content" id="tab3" style="display:none;">
+<div class="tab-panel" id="tab3" style="display:none;">
 <h3>Упаковка личного бренда</h3>
-<p>
-Помогаю экспертам стать “понятными” рынку: позиционирование, подача и смыслы,
-которые формируют доверие и повышают продажи.
-</p>
+<p>Создаю целостный образ эксперта: от позиционирования до визуальной айдентики и контент-стратегии.</p>
 <ul class="tab-list">
-<li><div class="check">✓</div> Позиционирование и стратегия</li>
-<li><div class="check">✓</div> Оффер и продуктовая линейка</li>
-<li><div class="check">✓</div> Смысловая упаковка</li>
-<li><div class="check">✓</div> Подготовка к сайту и запуску</li>
+<li><div class="check-icon">✓</div>Оффер и УТП</li>
+<li><div class="check-icon">✓</div>Позиционирование и ниша</li>
+<li><div class="check-icon">✓</div>Визуальный стиль</li>
+<li><div class="check-icon">✓</div>Контент-план и голос бренда</li>
+<li><div class="check-icon">✓</div>Сайт-визитка / лендинг</li>
 </ul>
-<div class="tab-result"><b>Результат:</b> бренд, который выделяется и продаёт.</div>
+<div class="tab-result">Результат: клиент с первого взгляда понимает, кто вы и зачем вы ему нужны.</div>
+<div class="tab-actions">
+<button class="btn btn-dark" onclick="go('contact')">Оставить заявку</button>
+<a class="btn btn-light" href="https://t.me/khodorv?text=Владислав привет, я хочу получить аудит" target="_blank">Получить аудит</a>
+</div>
 </div>
 
-<div class="tab-content" id="tab4" style="display:none;">
+<div class="tab-panel" id="tab4" style="display:none;">
 <h3>Запуск инфо-продукта</h3>
-<p>
-Запуск — это система. Я выстраиваю структуру запуска и продажи: сайт, прогрев, воронка, автоматизация.
-</p>
+<p>Провожу через весь цикл запуска: от идеи до первых продаж.</p>
 <ul class="tab-list">
-<li><div class="check">✓</div> Стратегия запуска</li>
-<li><div class="check">✓</div> Лендинг + структура продаж</li>
-<li><div class="check">✓</div> Прогрев и воронка</li>
-<li><div class="check">✓</div> Интеграции оплат / CRM</li>
+<li><div class="check-icon">✓</div>Упаковка продукта и оффер</li>
+<li><div class="check-icon">✓</div>Лендинг под запуск</li>
+<li><div class="check-icon">✓</div>Воронка прогрева в Telegram</li>
+<li><div class="check-icon">✓</div>Email / чат-бот последовательности</li>
+<li><div class="check-icon">✓</div>Аналитика и оптимизация</li>
 </ul>
-<div class="tab-result"><b>Результат:</b> запуск, который можно повторять и масштабировать.</div>
-</div>
-
-<div class="tab-content" id="tab5" style="display:none;">
-<h3>Формат работы</h3>
-<p>
-Работаю быстро, прозрачно и по этапам. После короткого аудита предлагаю лучший формат под задачу.
-</p>
-<ul class="tab-list">
-<li><div class="check">✓</div> Экспресс-аудит → план действий</li>
-<li><div class="check">✓</div> Прототип → дизайн → разработка</li>
-<li><div class="check">✓</div> AI-интеграции → запуск</li>
-<li><div class="check">✓</div> Поддержка и улучшения</li>
-</ul>
-<div class="tab-result"><b>Фокус:</b> рост конверсии, снижение стоимости лида, стабильные заявки.</div>
+<div class="tab-result">Результат: рабочая система запуска, готовая к масштабированию.</div>
+<div class="tab-actions">
+<button class="btn btn-dark" onclick="go('contact')">Оставить заявку</button>
+<a class="btn btn-light" href="https://t.me/khodorv?text=Владислав привет, я хочу получить аудит" target="_blank">Получить аудит</a>
 </div>
 </div>
 
-<div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
-<a class="btn primary magnetic" href="#contact">Оставить заявку</a>
-<a class="btn magnetic" href="https://t.me/khodorv" target="_blank">Получить аудит</a>
+<div class="tab-panel" id="tab5" style="display:none;">
+<h3>Как я работаю</h3>
+<p>Чёткий процесс от брифа до результата — без хаоса и лишних правок.</p>
+<ul class="tab-list">
+<li><div class="check-icon">1</div>Бриф и анализ задачи</li>
+<li><div class="check-icon">2</div>Прототип / структура / стратегия</li>
+<li><div class="check-icon">3</div>Дизайн и разработка</li>
+<li><div class="check-icon">4</div>Согласование и правки</li>
+<li><div class="check-icon">5</div>Сдача и поддержка</li>
+</ul>
+<div class="tab-result">Срок: от 3 дней до 3 недель в зависимости от проекта.</div>
+<div class="tab-actions">
+<button class="btn btn-dark" onclick="go('contact')">Оставить заявку</button>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
 
 <!-- PACKAGES -->
 <section id="packages">
-<div class="container">
-<h2 class="title">Форматы</h2>
-<p style="margin:0; font-size:16px; color: rgba(12,12,14,0.62); max-width:780px;">
-Выберите формат под задачу. Если не знаете — я помогу подобрать лучший вариант.
-</p>
+<div class="wrap">
+<h2 class="sec-title reveal">Форматы</h2>
+<p class="sec-sub reveal">Выберите формат под задачу. Если не знаете — я помогу подобрать лучший вариант.</p>
 
-<div class="packages-grid">
-<div class="package-card">
-<div class="package-name">Start</div>
-<h3 class="package-title">Landing / быстрый старт</h3>
-<div class="package-price">от 15 000 ₽</div>
-<p class="package-desc">
-Подходит, если нужен аккуратный продающий сайт и быстрый запуск.
-</p>
-<ul class="package-list">
-<li><div class="package-feature">✓</div> 1 страница (лендинг)</li>
-<li><div class="package-feature">✓</div> UX-структура</li>
-<li><div class="package-feature">✓</div> Дизайн + адаптив</li>
-<li><div class="package-feature">✓</div> Форма заявки</li>
+<div class="pkg-grid">
+
+<div class="pkg-card reveal">
+<div class="pkg-label">START</div>
+<div class="pkg-title">Landing / быстрый старт</div>
+<div class="pkg-price">от 15 000 ₽</div>
+<p class="pkg-desc">Подходит, если нужен аккуратный продающий сайт и быстрый запуск.</p>
+<ul class="pkg-list">
+<li><div class="pkg-check">✓</div>1 страница (лендинг)</li>
+<li><div class="pkg-check">✓</div>UX-структура</li>
+<li><div class="pkg-check">✓</div>Дизайн + адаптив</li>
+<li><div class="pkg-check">✓</div>Форма заявки</li>
 </ul>
+<a class="btn btn-light btn-full" href="https://t.me/khodorv" target="_blank">Обсудить</a>
 </div>
 
-<div class="package-card package-highlight">
-<div class="package-name">Pro</div>
-<h3 class="package-title">Сайт под продажи</h3>
-<div class="package-price">от 30 000 ₽</div>
-<p class="package-desc">
-Максимум конверсии: структура, дизайн и маркетинговая логика.
-</p>
-<ul class="package-list">
-<li><div class="package-feature">✓</div> Продающий лендинг / сайт</li>
-<li><div class="package-feature">✓</div> Тексты и оффер</li>
-<li><div class="package-feature">✓</div> Аналитика + интеграции</li>
-<li><div class="package-feature">✓</div> Оптимизация под заявки</li>
+<div class="pkg-card dark reveal">
+<div class="pkg-label">PRO</div>
+<div class="pkg-title">Сайт под продажи</div>
+<div class="pkg-price">от 30 000 ₽</div>
+<p class="pkg-desc">Максимум конверсии: структура, дизайн и маркетинговая логика.</p>
+<ul class="pkg-list">
+<li><div class="pkg-check">✓</div>Продающий лендинг / сайт</li>
+<li><div class="pkg-check">✓</div>Тексты и оффер</li>
+<li><div class="pkg-check">✓</div>Аналитика + интеграции</li>
+<li><div class="pkg-check">✓</div>Оптимизация под заявки</li>
 </ul>
+<a class="btn btn-full" href="https://t.me/khodorv" target="_blank" style="background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:11px 20px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;">Обсудить</a>
 </div>
 
-<div class="package-card">
-<div class="package-name">Full</div>
-<h3 class="package-title">AI + сайт + система</h3>
-<div class="package-price">от 60 000 ₽</div>
-<p class="package-desc">
-Полная система продаж: сайт + AI + автоматизация лидов.
-</p>
-<ul class="package-list">
-<li><div class="package-feature">✓</div> Сайт + упаковка бренда</li>
-<li><div class="package-feature">✓</div> AI-бот / AI-воронка</li>
-<li><div class="package-feature">✓</div> CRM / интеграции</li>
-<li><div class="package-feature">✓</div> Запуск и сопровождение</li>
+<div class="pkg-card reveal">
+<div class="pkg-label">FULL</div>
+<div class="pkg-title">AI + сайт + система</div>
+<div class="pkg-price">от 60 000 ₽</div>
+<p class="pkg-desc">Полная система продаж: сайт + AI + автоматизация лидов.</p>
+<ul class="pkg-list">
+<li><div class="pkg-check">✓</div>Сайт + упаковка бренда</li>
+<li><div class="pkg-check">✓</div>AI-бот / AI-воронка</li>
+<li><div class="pkg-check">✓</div>CRM / интеграции</li>
+<li><div class="pkg-check">✓</div>Запуск и сопровождение</li>
 </ul>
-</div>
-</div>
-</div>
-</section>
-
-<!-- CONTACT FORM -->
-<section id="contact">
-<div class="container">
-<h2 class="title">Оставить заявку</h2>
-<p style="margin:0; font-size:16px; color: rgba(12,12,14,0.62); max-width:780px;">
-Заполните форму — я отвечу и предложу решение под вашу задачу.
-</p>
-
-<div class="form-wrap">
-<div class="card">
-<h3 class="form-title">Что будет дальше?</h3>
-<p class="form-text">
-После заявки я свяжусь с вами, уточню задачу и предложу оптимальный формат работы.
-Обычно ответ — в течение 24 часов.
-</p>
-<p class="form-text" style="margin-top:14px;">
-Или напишите напрямую в Telegram:
-<a href="https://t.me/khodorv" target="_blank" style="font-weight:900;">@khodorv</a>
-</p>
+<a class="btn btn-light btn-full" href="https://t.me/khodorv" target="_blank">Обсудить</a>
 </div>
 
-<div class="card">
-<form action="https://formspree.io/f/mnjrnklw" method="POST" id="leadForm">
-<input type="hidden" name="_subject" value="Новая заявка с сайта V-PROD" />
-
-<input type="text" name="name" placeholder="Ваше имя" required />
-<input type="text" name="contact" placeholder="Telegram / WhatsApp / Email" required />
-<textarea name="message" placeholder="Коротко опишите задачу"></textarea>
-
-<button type="submit" class="btn primary magnetic">Отправить заявку</button>
-
-<div class="form-note">
-Нажимая кнопку, вы соглашаетесь на обработку данных.
-</div>
-
-<div class="success-message" id="successMessage">
-Заявка отправлена ✅ Я скоро вам напишу.
-</div>
-</form>
-</div>
-</div>
+</div><!-- end pkg-grid -->
 </div>
 </section>
 
 <!-- CASES -->
 <section id="cases">
-<div class="container">
-<h2 class="title">Кейсы</h2>
-<p style="margin:0; font-size:16px; color: rgba(12,12,14,0.62); max-width:780px;">
-Примеры проектов: сайты, упаковка и AI-решения.
-</p>
+<div class="wrap">
+<h2 class="sec-title reveal">Кейсы</h2>
+<p class="sec-sub reveal">Примеры проектов: сайты, упаковка и AI-решения.</p>
 
 <div class="cases-grid">
-<div class="case-card">
-<div class="case-top">
-<div class="case-tag">Website</div>
-<div class="case-year">2026</div>
-</div>
-<h3>Лендинг для эксперта</h3>
-<p>Задача: усилить доверие, структурировать оффер и увеличить заявки.</p>
-<p class="case-result"><b>Результат:</b> выше вовлечённость и конверсия.</p>
+
+<div class="case-card reveal">
+<div class="case-top"><span class="case-tag">WEBSITE</span><span class="case-year">2026</span></div>
+<div class="case-title">Лендинг для эксперта</div>
+<div class="case-desc">Задача: усилить доверие, структурировать оффер и увеличить заявки.</div>
+<div class="case-result">Результат: выше вовлечённость и конверсия.</div>
 </div>
 
-<div class="case-card">
-<div class="case-top">
-<div class="case-tag">AI</div>
-<div class="case-year">2026</div>
-</div>
-<h3>AI-бот для бизнеса</h3>
-<p>Задача: автоматизировать ответы и ускорить обработку лидов.</p>
-<p class="case-result"><b>Результат:</b> заявки обрабатываются быстрее.</p>
+<div class="case-card reveal">
+<div class="case-top"><span class="case-tag">AI</span><span class="case-year">2026</span></div>
+<div class="case-title">AI-бот для бизнеса</div>
+<div class="case-desc">Задача: автоматизировать ответы и ускорить обработку лидов.</div>
+<div class="case-result">Результат: заявки обрабатываются быстрее.</div>
 </div>
 
-<div class="case-card">
-<div class="case-top">
-<div class="case-tag">Branding</div>
-<div class="case-year">2026</div>
-</div>
-<h3>Упаковка личного бренда</h3>
-<p>Задача: позиционирование, подача и структура продаж.</p>
-<p class="case-result"><b>Результат:</b> сильнее доверие и заявки.</p>
+<div class="case-card reveal">
+<div class="case-top"><span class="case-tag">BRANDING</span><span class="case-year">2026</span></div>
+<div class="case-title">Упаковка личного бренда</div>
+<div class="case-desc">Задача: позиционирование, подача и структура продаж.</div>
+<div class="case-result">Результат: сильнее доверие и заявки.</div>
 </div>
 
-<div class="case-card">
-<div class="case-top">
-<div class="case-tag">Launch</div>
-<div class="case-year">2026</div>
+<div class="case-card reveal">
+<div class="case-top"><span class="case-tag">LAUNCH</span><span class="case-year">2026</span></div>
+<div class="case-title">Запуск инфо-продукта</div>
+<div class="case-desc">Задача: лендинг + прогрев + система продаж.</div>
+<div class="case-result">Результат: стабильный поток лидов.</div>
 </div>
-<h3>Запуск инфо-продукта</h3>
-<p>Задача: лендинг + прогрев + система продаж.</p>
-<p class="case-result"><b>Результат:</b> стабильный поток лидов.</p>
+
+</div><!-- end cases-grid -->
 </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="wrap">
+<h2 class="sec-title reveal">Оставить заявку</h2>
+<p class="sec-sub reveal">Заполните форму — я отвечу и предложу решение под вашу задачу.</p>
+
+<div class="card reveal" style="margin-bottom:10px;">
+<div style="font-size:16px;font-weight:900;margin-bottom:8px;">Что будет дальше?</div>
+<p style="font-size:14px;color:var(--muted);line-height:1.65;">
+После заявки я свяжусь с вами, уточню задачу и предложу оптимальный формат работы. Обычно ответ — в течение 24 часов.<br><br>
+Или напишите напрямую в Telegram: <b style="color:var(--text);">@khodorv</b>
+</p>
+</div>
+
+<div class="card reveal">
+<form id="contactForm">
+<input class="field" type="text" name="name" placeholder="Ваше имя" required />
+<input class="field" type="text" name="contact" placeholder="Telegram / WhatsApp / Email" required />
+<textarea class="field" name="message" placeholder="Коротко опишите задачу"></textarea>
+<p class="field-note">Нажимая кнопку, вы соглашаетесь на обработку данных.</p>
+<button type="submit" class="btn btn-dark btn-full btn-lg">Отправить заявку</button>
+</form>
+<div class="success-msg" id="successMsg">✓ Заявка отправлена! Свяжусь с вами в ближайшее время.</div>
 </div>
 </div>
 </section>
 
 <!-- LINKS -->
 <section id="links">
-<div class="container">
-<h2 class="title">Связь</h2>
-<p style="margin:0; font-size:16px; color: rgba(12,12,14,0.62); max-width:780px;">
-Напишите мне напрямую или подпишитесь на соцсети.
-</p>
+<div class="wrap">
+<h2 class="sec-title reveal">Связь</h2>
+<p class="sec-sub reveal">Напишите мне напрямую или подпишитесь на соцсети.</p>
 
 <div class="links-grid">
-<a class="link-card" href="https://t.me/khodorv" target="_blank">
-<h3>Telegram</h3>
-<p>Быстрый контакт / обсуждение проекта</p>
+
+<a class="link-card reveal" href="https://t.me/khodorv" target="_blank">
+<div><h3>Telegram</h3><p>Быстрый контакт / обсуждение проекта</p></div>
+<span class="link-arrow">↗</span>
 </a>
 
-<a class="link-card" href="https://www.instagram.com/vladproduser?igsh=bDRiY2V1YWx2eGY4&utm_source=qr" target="_blank">
-<h3>Instagram</h3>
-<p>Проекты, стиль, личный бренд</p>
+<a class="link-card reveal" href="https://www.instagram.com/vladproduser" target="_blank">
+<div><h3>Instagram</h3><p>Проекты, стиль, личный бренд</p></div>
+<span class="link-arrow">↗</span>
 </a>
 
-<a class="link-card" href="https://t.me/+nLmarnHE2hwxOGEy" target="_blank">
-<h3>Блог</h3>
-<p>AI, маркетинг, сайты, разборы и идеи</p>
+<a class="link-card reveal" href="https://t.me/+nLmarnHE2hwxOGEy" target="_blank">
+<div><h3>Блог</h3><p>AI, маркетинг, сайты, разборы и идеи</p></div>
+<span class="link-arrow">↗</span>
 </a>
-</div>
 
-<div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
-<a class="btn primary magnetic" href="https://t.me/khodorv" target="_blank">Написать в Telegram</a>
-<a class="btn magnetic" href="https://www.instagram.com/vladproduser?igsh=bDRiY2V1YWx2eGY4&utm_source=qr" target="_blank">Перейти в Instagram</a>
-<a class="btn magnetic" href="https://t.me/+nLmarnHE2hwxOGEy" target="_blank">Открыть блог</a>
-</div>
+</div><!-- end links-grid -->
 </div>
 </section>
 
 </main>
 
 <footer>
-<div class="container footer-inner">
-<p>© V-PROD, 2026. Все права защищены.</p>
-<div class="footer-watermark">V-PROD</div>
+<div class="container">
+<div class="footer-inner">
+<span class="footer-copy">© V-PROD 2026</span>
+<span class="footer-copy">Влад Ходорчук</span>
+</div>
 </div>
 </footer>
 
 <script>
-// ===== Animated Title Letters =====
-const title = "V-PROD";
-const titleEl = document.getElementById("animatedTitle");
-
-title.split("").forEach((char, i) => {
-const span = document.createElement("span");
-span.textContent = char;
-span.style.animationDelay = (i * 0.08) + "s";
-titleEl.appendChild(span);
-});
-
-// ===== Tabs =====
-const tabButtons = document.querySelectorAll(".tab-btn");
-const tabContents = document.querySelectorAll(".tab-content");
-
-tabButtons.forEach(btn => {
-btn.addEventListener("click", () => {
-tabButtons.forEach(b => b.classList.remove("active"));
-btn.classList.add("active");
-
-const target = btn.getAttribute("data-tab");
-
-tabContents.forEach(c => {
-c.style.display = "none";
-c.style.opacity = "0";
-});
-
-const activeTab = document.getElementById(target);
-activeTab.style.display = "block";
-
-requestAnimationFrame(() => {
-activeTab.style.opacity = "1";
-});
-});
-});
-
-// ===== Scroll reveal =====
-const revealElements = document.querySelectorAll("section, footer");
-revealElements.forEach(el => el.classList.add("reveal"));
-
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-entry.target.classList.add("visible");
-observer.unobserve(entry.target);
+// Nav scroll
+function go(id) {
+document.getElementById(id).scrollIntoView({behavior:'smooth'});
+document.getElementById('burger').classList.remove('open');
+document.getElementById('mobileMenu').classList.remove('open');
 }
+
+// Burger
+function toggleMenu() {
+document.getElementById('burger').classList.toggle('open');
+document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// Hero title
+const el = document.getElementById('heroTitle');
+"V-PROD".split('').forEach((ch, i) => {
+const s = document.createElement('span');
+s.textContent = ch;
+s.style.cssText = `display:inline-block;opacity:0;transform:translateY(20px);animation:li 0.6s ease forwards;animation-delay:${i*0.07}s`;
+el.appendChild(s);
 });
-}, { threshold: 0.12 });
+const st = document.createElement('style');
+st.textContent = '@keyframes li{to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(st);
 
-revealElements.forEach(el => observer.observe(el));
-
-// ===== Magnetic buttons effect =====
-const magneticButtons = document.querySelectorAll(".magnetic");
-
-magneticButtons.forEach(btn => {
-btn.addEventListener("mousemove", (e) => {
-const rect = btn.getBoundingClientRect();
-const x = e.clientX - rect.left - rect.width / 2;
-const y = e.clientY - rect.top - rect.height / 2;
-
-btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-});
-
-btn.addEventListener("mouseleave", () => {
-btn.style.transform = "translate(0,0)";
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+document.getElementById(btn.dataset.tab).style.display = 'block';
 });
 });
 
-// ===== Formspree submit =====
-const form = document.getElementById("leadForm");
-const successMessage = document.getElementById("successMessage");
+// Reveal
+const obs = new IntersectionObserver(entries => {
+entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-form.addEventListener("submit", async (e) => {
+// Form
+document.getElementById('contactForm').addEventListener('submit', function(e) {
 e.preventDefault();
-
-const formData = new FormData(form);
-
-try {
-const response = await fetch(form.action, {
-method: form.method,
-body: formData,
-headers: { "Accept": "application/json" }
-});
-
-if (response.ok) {
-successMessage.style.display = "block";
-form.reset();
-} else {
-alert("Ошибка отправки. Попробуйте ещё раз.");
-}
-} catch (error) {
-alert("Ошибка сети. Проверьте интернет.");
-}
+this.style.display = 'none';
+document.getElementById('successMsg').style.display = 'block';
 });
 </script>
-
 </body>
 </html>
