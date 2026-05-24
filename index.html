@@ -565,11 +565,28 @@ entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); 
 }, {threshold: 0.1});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-// Form
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Form - send to Telegram bot
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
 e.preventDefault();
+const name = this.name.value;
+const contact = this.contact.value;
+const message = this.message.value;
+
+const token = '8864391119:AAG9c08CaeB7_9_ENRpLdW-BCcM4cUXupEE';
+const chatId = '8176501312';
+const text = `🔔 Новая заявка с сайта V-PROD!\n\n👤 Имя: ${name}\n📱 Контакт: ${contact}\n💬 Сообщение: ${message || '—'}`;
+
+try {
+const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ chat_id: chatId, text: text })
+});
+if (res.ok) {
 this.style.display = 'none';
 document.getElementById('successMsg').style.display = 'block';
+}
+} catch(err) {}
 });
 </script>
 </body>
